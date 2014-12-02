@@ -1,6 +1,10 @@
 # NETHOGS
 
-Fork of http://nethogs.sf.net.
+Fork of http://nethogs.sf.net. 
+
+## Goals 
+
+This fork aims to add an optional line based output with a set interval.
 
 ## INTRODUCTION
 
