@@ -13,6 +13,17 @@ NetHogs is a small 'net top' tool. Instead of breaking the traffic down per prot
 
 Since NetHogs heavily relies on /proc, it currently runs on Linux only. 
 
+## Installation
+
+Dependencies:
+- libpcap-dev 
+- libncurses5-dev
+
+```
+make clean && make
+sudo make install
+```
+
 ## STATUS
 
 * Only IPv4 TCP is currently supported
