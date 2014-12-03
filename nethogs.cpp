@@ -353,8 +353,17 @@ int main (int argc, char** argv)
 		current_dev = current_dev->next;
 	}
 
-	signal (SIGALRM, &alarm_cb);
-	signal (SIGINT, &quit_cb);
+	struct sigaction alarm_action, quit_action;
+	alarm_action.sa_handler = alarm_cb;
+	alarm_action.sa_flags = 0;
+	sigemptyset(&alarm_action.sa_mask);
+	
+	quit_action.sa_handler = quit_cb;
+	quit_action.sa_flags = 0;
+	sigemptyset(&quit_action.sa_mask);
+	
+	sigaction (SIGALRM, &alarm_action, NULL);
+	sigaction (SIGINT, &quit_action, NULL);
 	alarm (refreshdelay);
 
 	fprintf(stderr, "Waiting for first packet to arrive (see sourceforge.net bug 1019381)\n");
