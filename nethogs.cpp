@@ -227,11 +227,11 @@ static void versiondisplay(void)
 static void help(void)
 {
 	//std::cerr << "usage: nethogs [-V] [-b] [-d seconds] [-t] [-p] [-f (eth|ppp))] [device [device [device ...]]]\n";
-	std::cerr << "usage: nethogs [-V] [-b] [-d seconds] [-t] [-p] [device [device [device ...]]]\n";
+	std::cerr << "usage: nethogs [-V] [-b] [-d seconds] [-t] [-f string [-f ...]] [-p] [device [device [device ...]]]\n";
 	std::cerr << "		-V : prints version.\n";
 	std::cerr << "		-d : delay for update refresh rate in seconds. default is 1.\n";
 	std::cerr << "		-t : tracemode.\n";
-	//std::cerr << "		-f : format of packets on interface, default is eth.\n";
+	std::cerr << "		-f : filter by string in command line. Can be repeated.\n";
 	std::cerr << "		-b : bughunt mode - implies tracemode.\n";
 	std::cerr << "		-p : sniff in promiscious mode (not recommended).\n";
 	std::cerr << "		device : device(s) to monitor. default is eth0\n";
