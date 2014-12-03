@@ -10,7 +10,6 @@
 #include "nethogs.h"
 #include "process.h"
 
-
 std::string * caption;
 //extern char [] version;
 const char version[] = " version " VERSION "." SUBVERSION "." MINORVERSION;
@@ -310,7 +309,7 @@ void do_refresh()
 	unsigned int proglen; // max length of the "PROGRAM" column
 
 	getmaxyx(stdscr, row, col);	 /* find the boundaries of the screeen */
-	if (col < 60) {
+	if (!tracemode && col < 60) {
 		clear();
 		mvprintw(0,0, "The terminal is too narrow! Please make it wider.\nI'll wait...");
 		return;
@@ -321,11 +320,11 @@ void do_refresh()
 	proglen = col - 53;
 
 	refreshconninode();
-	if (DEBUG || tracemode)
+	if (DEBUG && tracemode)
 	{
 		std::cout << "\nRefreshing:\n";
 	}
-	else
+	else if (!tracemode)
 	{
 		clear();
 		mvprintw (0, 0, "%s", caption->c_str());
