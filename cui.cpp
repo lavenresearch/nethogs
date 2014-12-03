@@ -9,6 +9,7 @@
 #include <ncurses.h>
 #include "nethogs.h"
 #include "process.h"
+#include "filter.h"
 
 std::string * caption;
 //extern char [] version;
@@ -77,6 +78,13 @@ void Line::show (int row, unsigned int proglen)
 {
 	assert (m_pid >= 0);
 	assert (m_pid <= 100000);
+
+	if(!acceptProcessName(m_name)) {
+		#if DEBUG
+		std::cout << "Filtered " << m_name << std::endl;
+		#endif
+		return;
+	}
 
 	if (DEBUG || tracemode)
 	{

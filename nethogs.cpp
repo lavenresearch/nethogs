@@ -1,6 +1,7 @@
 /* nethogs.cpp */
 
 #include "nethogs.h"
+#include "filter.h"
 
 #include <iostream>
 #include <stdio.h>
@@ -261,7 +262,7 @@ int main (int argc, char** argv)
 	int promisc = 0;
 
 	int opt;
-	while ((opt = getopt(argc, argv, "Vhbtpd:")) != -1) {
+	while ((opt = getopt(argc, argv, "Vhbtpd:f:")) != -1) {
 		switch(opt) {
 			case 'V':
 				versiondisplay();
@@ -281,6 +282,9 @@ int main (int argc, char** argv)
 				break;
 			case 'd':
 				refreshdelay=atoi(optarg);
+				break;
+			case 'f': 
+				addProcessFilter(optarg);	
 				break;
 			/*
 			case 'f':

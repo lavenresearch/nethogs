@@ -2,9 +2,10 @@
 
 Fork of http://nethogs.sf.net. 
 
-## Goals 
+## New Features 
 
-This fork aims to add an optional line based output with a set interval.
+- Line mode (`sudo nethogs -t`) works again
+- Output can be filtered by process command line (`sudo nethogs -f sshd -f netcat`) 
 
 ## INTRODUCTION
 
