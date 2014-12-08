@@ -4,8 +4,11 @@ Fork of http://nethogs.sf.net.
 
 ## New Features 
 
-- Line mode (`sudo nethogs -t`) works again
+- Line mode 
+  - (`sudo nethogs -t`) works again
+  - consistently use `\t` as column separator
 - Output can be filtered by process command line (`sudo nethogs -f sshd -f netcat`) 
+- less CPU usage
 
 ## Introduction
 
