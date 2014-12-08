@@ -88,7 +88,7 @@ void Line::show (int row, unsigned int proglen)
 
 	if (DEBUG || tracemode)
 	{
-		std::cout << m_name << '\t' << m_pid << '\t' << m_uid << "\t" << sent_value << "\t" << recv_value << std::endl;
+		std::cout << m_name << '/' << m_pid << '/' << m_uid << "\t" << sent_value << "\t" << recv_value << std::endl;
 		return;
 	}
 
@@ -454,7 +454,7 @@ void do_refresh()
 		sent_global += lines[i]->sent_value;
 		delete lines[i];
 	}
-	if (tracemode || DEBUG) {
+	if (DEBUG) {
 		/* print the 'unknown' connections, for debugging */
 		ConnList * curr_unknownconn = unknowntcp->connections;
 		while (curr_unknownconn != NULL) {
