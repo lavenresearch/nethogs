@@ -2,6 +2,8 @@
 
 Fork of http://nethogs.sf.net. 
 
+**Warning**: nethogs works by looking up process information inside the /proc filesystem. When connections are opened and closed very quickly, it may not be able to associate a packet with a process. The information data nethogs gives might therefor not be 100% reliable.
+
 ## New Features 
 
 - Line mode 
