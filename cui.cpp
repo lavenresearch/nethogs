@@ -88,7 +88,7 @@ void Line::show (int row, unsigned int proglen)
 
 	if (DEBUG || tracemode)
 	{
-		std::cout << m_name << '/' << m_pid << '/' << m_uid << "\t" << sent_value << "\t" << recv_value << std::endl;
+		std::cout << m_name << '\t' << m_pid << '\t' << m_uid << "\t" << sent_value << "\t" << recv_value << std::endl;
 		return;
 	}
 
@@ -483,5 +483,3 @@ void do_refresh()
 		refresh();
 	}
 }
-
-
