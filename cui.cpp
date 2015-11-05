@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <cstdlib>
 #include <algorithm>
-
+#include <sstream>
 #include <ncurses.h>
 #include "nethogs.h"
 #include "process.h"
@@ -28,7 +28,7 @@ int VIEWMODE_KBPS = 0;
 int VIEWMODE_TOTAL_KB = 1;
 int VIEWMODE_TOTAL_B = 2;
 int VIEWMODE_TOTAL_MB = 3;
-int viewMode = VIEWMODE_KBPS;
+int viewMode = VIEWMODE_TOTAL_B;
 int nViewModes = 4;
 
 class Line
@@ -78,8 +78,12 @@ void Line::show (int row, unsigned int proglen)
 {
 	assert (m_pid >= 0);
 	assert (m_pid <= 100000);
-
-	if(!acceptProcessName(m_name)  && !acceptProcessName(m_pid)) {
+	std::stringstream ss;
+	std::string s_pid;
+	ss.clear();
+	ss<< m_pid;
+	ss>> s_pid;
+	if(!acceptProcessName(m_name)  && !acceptProcessName(s_pid.c_str())) {
 		#if DEBUG
 		std::cout << "Filtered " << m_name << std::endl;
 		#endif
