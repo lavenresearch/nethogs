@@ -322,6 +322,7 @@ int main (int argc, char** argv)
 
 	handle * handles = NULL;
 	device * current_dev = devices;
+	// for each device for monitoring, create a new handle
 	while (current_dev != NULL) {
 		getLocal(current_dev->name, tracemode);
 		if ((!tracemode) && (!DEBUG)){
@@ -332,6 +333,9 @@ int main (int argc, char** argv)
 		dp_handle * newhandle = dp_open_live(current_dev->name, BUFSIZ, promisc, 100, errbuf);
 		if (newhandle != NULL)
 		{
+			// process_ip, process_tcp etc. are callback functions, 
+			// they will be called on receiveing a packet
+			// these callback function are added to newhandle, so the newhandle will call them based on packet type.
 			dp_addcb (newhandle, dp_packet_ip, process_ip);
 			dp_addcb (newhandle, dp_packet_ip6, process_ip6);
 			dp_addcb (newhandle, dp_packet_tcp, process_tcp);
@@ -347,6 +351,8 @@ int main (int argc, char** argv)
 			{
 				fprintf(stderr, "Error putting libpcap in nonblocking mode\n");
 			}
+			// handles acturally is a handle list. 
+			// the handle class, take newhandle and the exist hanle list and create a new handle list including all
 			handles = new handle (newhandle, current_dev->name, handles);
 		}
 		else

@@ -79,7 +79,7 @@ void Line::show (int row, unsigned int proglen)
 	assert (m_pid >= 0);
 	assert (m_pid <= 100000);
 
-	if(!acceptProcessName(m_name)) {
+	if(!acceptProcessName(m_name)  && !acceptProcessName(m_pid)) {
 		#if DEBUG
 		std::cout << "Filtered " << m_name << std::endl;
 		#endif
