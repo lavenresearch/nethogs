@@ -37,6 +37,7 @@ unsigned refreshdelay = 1;
 bool tracemode = false;
 bool bughuntmode = false;
 bool needrefresh = true;
+std::string  port_filter = "none";
 //packet_type packettype = packet_ethernet;
 //dp_link_type linktype = dp_link_ethernet;
 const char version[] = " version " VERSION "." SUBVERSION "." MINORVERSION;
@@ -231,7 +232,9 @@ static void help(void)
 	std::cerr << "		-V : prints version.\n";
 	std::cerr << "		-d : delay for update refresh rate in seconds. default is 1.\n";
 	std::cerr << "		-t : tracemode.\n";
-	std::cerr << "		-f : filter by string in command line. Can be repeated.\n";
+	std::cerr << "		-f : filter by string in command line or pid. Can be repeated.\n";
+	std::cerr << "		-l : filtering traffic by filter expression support in libpcap.\n";
+	std::cerr << "		filter expression example: \"tcp and src host 192.168.1.1 and (dst port 22 or dst port 23)\"\n";
 	std::cerr << "		-b : bughunt mode - implies tracemode.\n";
 	std::cerr << "		-p : sniff in promiscious mode (not recommended).\n";
 	std::cerr << "		device : device(s) to monitor. default is eth0\n";
@@ -262,7 +265,7 @@ int main (int argc, char** argv)
 	int promisc = 0;
 
 	int opt;
-	while ((opt = getopt(argc, argv, "Vhbtpd:f:")) != -1) {
+	while ((opt = getopt(argc, argv, "Vhbtpd:f:l:")) != -1) {
 		switch(opt) {
 			case 'V':
 				versiondisplay();
@@ -286,6 +289,12 @@ int main (int argc, char** argv)
 			case 'f':
 				addProcessFilter(optarg);
 				break;
+			case 'l':
+				port_filter = optarg;
+				break;
+				// port_filter.c_str();
+				//port_filter = (char *)malloc(sizeof(char)* strlen(optarg));
+				//memcpy(port_filter,optarg,)
 			/*
 			case 'f':
 				argv++;
@@ -392,7 +401,13 @@ int main (int argc, char** argv)
 			struct dpargs * userdata = (dpargs *) malloc (sizeof (struct dpargs));
 			userdata->sa_family = AF_UNSPEC;
 			currentdevice = current_handle->devicename;
-			int retval = dp_dispatch (current_handle->content, -1, (u_char *)userdata, sizeof (struct dpargs));
+			int retval;
+			if (port_filter != "none"){
+				retval = dp_dispatch (current_handle->content, -1, (u_char *)userdata, sizeof (struct dpargs), port_filter.c_str(), currentdevice, errbuf);
+			}
+			else{
+				retval = dp_dispatch (current_handle->content, -1, (u_char *)userdata, sizeof (struct dpargs), NULL, NULL, NULL);
+			}
 			if (retval == -1 || retval == -2)
 			{
 				std::cerr << "Error dispatching" << std::endl;
