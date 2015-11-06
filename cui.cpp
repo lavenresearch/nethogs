@@ -24,12 +24,12 @@ extern Process * unknownip;
 // sort on sent or received?
 bool sortRecv = true;
 // viewMode: kb/s or total
-int VIEWMODE_KBPS = 0;
-int VIEWMODE_TOTAL_KB = 1;
-int VIEWMODE_TOTAL_B = 2;
-int VIEWMODE_TOTAL_MB = 3;
-int viewMode = VIEWMODE_KBPS;
-int nViewModes = 4;
+extern int VIEWMODE_KBPS;
+extern int VIEWMODE_TOTAL_KB;
+extern int VIEWMODE_TOTAL_B;
+extern int VIEWMODE_TOTAL_MB;
+extern int viewMode;
+extern int nViewModes;
 
 class Line
 {

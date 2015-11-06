@@ -32,12 +32,19 @@ extern "C" {
 #include "devices.h"
 
 extern Process * unknownudp;
+// viewMode: kb/s or total
+extern int VIEWMODE_KBPS;
+extern int VIEWMODE_TOTAL_KB;
+extern int VIEWMODE_TOTAL_B;
+extern int VIEWMODE_TOTAL_MB;
+extern int viewMode;
+extern int nViewModes;
 
 unsigned refreshdelay = 1;
 bool tracemode = false;
 bool bughuntmode = false;
 bool needrefresh = true;
-std::string  port_filter = "none";
+std::string port_filter = "none";
 //packet_type packettype = packet_ethernet;
 //dp_link_type linktype = dp_link_ethernet;
 const char version[] = " version " VERSION "." SUBVERSION "." MINORVERSION;
@@ -228,7 +235,7 @@ static void versiondisplay(void)
 static void help(void)
 {
 	//std::cerr << "usage: nethogs [-V] [-b] [-d seconds] [-t] [-p] [-f (eth|ppp))] [device [device [device ...]]]\n";
-	std::cerr << "usage: nethogs [-V] [-b] [-d seconds] [-t] [-f string [-f ...]] [-p] [device [device [device ...]]]\n";
+	std::cerr << "usage: nethogs [-V] [-b] [-d seconds] [-t] [-f string [-f ...]] [-p] [-l filter expression] [-v kbps|b|kb|mb] [device [device [device ...]]]\n";
 	std::cerr << "		-V : prints version.\n";
 	std::cerr << "		-d : delay for update refresh rate in seconds. default is 1.\n";
 	std::cerr << "		-t : tracemode.\n";
@@ -237,6 +244,7 @@ static void help(void)
 	std::cerr << "		filter expression example: \"tcp and src host 192.168.1.1 and (dst port 22 or dst port 23)\"\n";
 	std::cerr << "		-b : bughunt mode - implies tracemode.\n";
 	std::cerr << "		-p : sniff in promiscious mode (not recommended).\n";
+	std::cerr << "		-v : choose view mode(kbps|b|kb|mb).\n";
 	std::cerr << "		device : device(s) to monitor. default is eth0\n";
 	std::cerr << std::endl;
 	std::cerr << "When nethogs is running, press:\n";
@@ -265,7 +273,7 @@ int main (int argc, char** argv)
 	int promisc = 0;
 
 	int opt;
-	while ((opt = getopt(argc, argv, "Vhbtpd:f:l:")) != -1) {
+	while ((opt = getopt(argc, argv, "Vhbtpd:f:l:v:")) != -1) {
 		switch(opt) {
 			case 'V':
 				versiondisplay();
@@ -292,6 +300,26 @@ int main (int argc, char** argv)
 			case 'l':
 				port_filter = optarg;
 				break;
+			case 'v':{
+				std::string soptarg;
+				soptarg = optarg;
+				if (soptarg == "kbps"){
+					viewMode = VIEWMODE_KBPS;
+				}
+				else if (soptarg == "b"){
+					viewMode = VIEWMODE_TOTAL_B;
+				}
+				else if (soptarg == "kb"){
+					viewMode = VIEWMODE_TOTAL_KB;
+				}
+				else if (soptarg == "mb"){
+					viewMode = VIEWMODE_TOTAL_MB;
+				}
+				else{
+					std::cerr << "Use default view mode : kbps\n";
+				}
+				break;
+			}
 				// port_filter.c_str();
 				//port_filter = (char *)malloc(sizeof(char)* strlen(optarg));
 				//memcpy(port_filter,optarg,)

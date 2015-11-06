@@ -10,8 +10,9 @@ Fork of http://nethogs.sf.net.
   - (`sudo nethogs -t`) works again
   - consistently use `\t` as column separator
 - Output can be filtered by process command line or PID (`sudo nethogs -f sshd -f netcat`) 
-- less CPU usage
+- Less CPU usage
 - Traffic Filter with filter expression (`sudo nethogs -f sshd -f netcat -l "dst port 22 or src port 22"`)
+- View mode switch (sudo nethogs -v kbps|b|kb|mb)
 
 ## Introduction
 
@@ -33,7 +34,7 @@ sudo make install
 ## Running
 
 ```
-sudo nethogs [-f <processname>]* [-d refresh_interval] [-t tracemode / line based output] [-l <filter expression>] device*
+sudo nethogs [-f <processname>]* [-d refresh_interval] [-t tracemode / line based output] [-l <filter expression>] [-v <view mode>] device*
 ```
 
 ## Status
