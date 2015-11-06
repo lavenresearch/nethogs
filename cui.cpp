@@ -92,8 +92,7 @@ void Line::show (int row, unsigned int proglen)
 
 	if (DEBUG || tracemode)
 	{
-		std::cout << m_name << '/' << m_pid << '/' << m_uid << "\t" << sent_value << "\t" << recv_value << std::endl;
-		return;
+		std::cout << m_name << '/' << m_pid << '/' << m_uid << "\t" <<std::fixed<<std::setprecision(16)<< sent_value << "\t" <<std::fixed<<std::setprecision(16)<< recv_value << std::endl;		return;
 	}
 
 	if (m_pid == 0)
