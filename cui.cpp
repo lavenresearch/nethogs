@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <sstream>
 #include <ncurses.h>
+#include <iomanip>
 #include "nethogs.h"
 #include "process.h"
 #include "filter.h"
