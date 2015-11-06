@@ -2,6 +2,6 @@
 
 device * determine_default_device()
 {
-	return new device("enp1s0f0");
+	return new device("eth0");
 }
 
